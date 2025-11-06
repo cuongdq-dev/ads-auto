@@ -1,0 +1,64 @@
+{
+  "app": {
+    "name": "TVHs",
+    "welcome": "Welcome to TVHs Management System",
+    "tagline": "All-in-one platform for enterprise operations and collaboration",
+    "description": "Manage employees, departments, and projects in one unified system. Improve efficiency, transparency, and internal communication across your organization.",
+    "view": "View",
+    "reload": "Reload"
+  },
+
+  "auth": {
+    "continueWithGoogle": "Continue with Google Workspace",
+    "whyChooseUs": "Why Choose TVHs System",
+    "features": {
+      "groupManagement": {
+        "title": "Department Management",
+        "description": "Create and manage departments, teams, and roles easily"
+      },
+      "realTimeChat": {
+        "title": "Internal Communication",
+        "description": "Collaborate instantly with built-in chat and announcements"
+      },
+      "smartTracking": {
+        "title": "Project & Task Tracking",
+        "description": "Assign, monitor, and update project progress in real time"
+      },
+      "securePrivate": {
+        "title": "Secure & Centralized Data",
+        "description": "All company data protected under enterprise-level security"
+      }
+    },
+    "hero": {
+      "badge": "Efficient & Connected",
+      "title": "Manage your company operations effortlessly",
+      "description": "A modern management platform that connects people, projects, and performance in one place.",
+      "easyTracking": {
+        "title": "Simplified Project Tracking",
+        "subtitle": "Monitor progress in real-time",
+        "description": "Plan, assign, and track team activities with clear visibility and automation."
+      },
+      "fairSplit": {
+        "title": "Performance & KPI Insights",
+        "subtitle": "Transparent and measurable goals",
+        "description": "Measure progress, performance, and results across departments with analytics and dashboards."
+      }
+    },
+    "loggingIn": "Signing in...",
+    "loginSuccess": "Login successful! Redirecting..."
+  },
+
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "vietnamese": "Tiếng Việt"
+  },
+
+  "errors": {
+    "notFound": "Page Not Found",
+    "groupNotFound": "Department Not Found",
+    "groupNotFoundDescription": "The department or record you’re looking for doesn’t exist or you don’t have permission to access it.",
+    "backToHome": "Back to Dashboard",
+    "createNewGroup": "Create New Department"
+  }
+}

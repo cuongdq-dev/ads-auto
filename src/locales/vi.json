@@ -1,0 +1,64 @@
+{
+  "app": {
+    "name": "TVHs",
+    "welcome": "Chào mừng bạn đến với hệ thống quản lý TVHs",
+    "tagline": "Nền tảng quản lý và cộng tác doanh nghiệp toàn diện",
+    "description": "Quản lý nhân sự, phòng ban, dự án và quy trình nội bộ trong một hệ thống thống nhất. Giúp nâng cao hiệu suất, minh bạch và kết nối giữa các bộ phận.",
+    "view": "Xem",
+    "reload": "Tải lại"
+  },
+
+  "auth": {
+    "continueWithGoogle": "Đăng nhập bằng Google Workspace",
+    "whyChooseUs": "Tại sao chọn hệ thống TVHs",
+    "features": {
+      "groupManagement": {
+        "title": "Quản lý phòng ban",
+        "description": "Tạo và quản lý phòng ban, nhóm, vai trò dễ dàng"
+      },
+      "realTimeChat": {
+        "title": "Giao tiếp nội bộ",
+        "description": "Trao đổi nhanh chóng với tin nhắn và thông báo nội bộ"
+      },
+      "smartTracking": {
+        "title": "Theo dõi công việc & dự án",
+        "description": "Giao việc, theo dõi tiến độ và cập nhật kết quả theo thời gian thực"
+      },
+      "securePrivate": {
+        "title": "Bảo mật & Tập trung dữ liệu",
+        "description": "Toàn bộ dữ liệu doanh nghiệp được bảo vệ với tiêu chuẩn an toàn cao"
+      }
+    },
+    "hero": {
+      "badge": "Hiệu quả & Kết nối",
+      "title": "Quản lý hoạt động doanh nghiệp dễ dàng hơn bao giờ hết",
+      "description": "Nền tảng quản lý hiện đại giúp kết nối con người, dự án và hiệu suất trong cùng một hệ thống.",
+      "easyTracking": {
+        "title": "Theo dõi dự án dễ dàng",
+        "subtitle": "Giám sát tiến độ theo thời gian thực",
+        "description": "Lên kế hoạch, phân công và theo dõi công việc của nhóm với tầm nhìn rõ ràng và tự động hóa."
+      },
+      "fairSplit": {
+        "title": "Hiệu suất & Chỉ số KPI",
+        "subtitle": "Mục tiêu rõ ràng, kết quả đo lường được",
+        "description": "Đánh giá hiệu quả làm việc của cá nhân và phòng ban qua hệ thống báo cáo và biểu đồ."
+      }
+    },
+    "loggingIn": "Đang đăng nhập...",
+    "loginSuccess": "Đăng nhập thành công! Đang chuyển hướng..."
+  },
+
+  "language": {
+    "label": "Ngôn ngữ",
+    "english": "English",
+    "vietnamese": "Tiếng Việt"
+  },
+
+  "errors": {
+    "notFound": "Không tìm thấy trang",
+    "groupNotFound": "Không tìm thấy phòng ban",
+    "groupNotFoundDescription": "Phòng ban hoặc dữ liệu bạn đang tìm không tồn tại hoặc bạn không có quyền truy cập.",
+    "backToHome": "Quay lại trang chính",
+    "createNewGroup": "Tạo phòng ban mới"
+  }
+}
