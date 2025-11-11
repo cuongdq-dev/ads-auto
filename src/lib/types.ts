@@ -14,10 +14,23 @@ export interface Campaign {
   spent: number;
   impressions: number;
   conversions: number;
-  createdAt: string;
+  createdAt?: Date;
   accountId: string;
   pixelId: string;
   automations: string[];
+  // TODO
+  saved?: boolean;
+  targeting?: {
+    ageMin?: number;
+    ageMax?: number;
+    locations?: string[];
+  };
+  creative?: {
+    id?: string;
+    name?: string;
+  };
+
+  dailyBudget?: number;
 }
 
 export interface Account {
@@ -36,12 +49,15 @@ export interface Pixel {
 
 export interface Suggestion {
   id: string;
-  type: "creative" | "targeting" | "budget";
+  type: "creative" | "targeting" | "budget" | "audience";
   title: string;
   reason: string;
   impressions: number;
-  createdAt: string;
+  createdAt: Date;
+
   campaignId?: string;
+  priority?: string;
+  status?: string;
 }
 
 export interface ActivityLog {
@@ -51,6 +67,7 @@ export interface ActivityLog {
   timestamp: string;
   status: "success" | "error" | "pending";
   details?: string;
+  campaignId?: string;
 }
 
 export interface TokenStatus {
@@ -58,6 +75,7 @@ export interface TokenStatus {
   expiresAt: string;
   status: "valid" | "expiring-soon" | "expired";
   lastSync: string;
+  accountId: string;
 }
 
 export interface CreateCampaignPayload {

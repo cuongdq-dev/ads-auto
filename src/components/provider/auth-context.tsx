@@ -1,6 +1,5 @@
 "use client";
 
-// import useFcmToken from "@buddy/hooks/use-fcmToken";
 import { deleteCookie, getCookie, setCookie } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import {
@@ -24,7 +23,6 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  // token: string | null;
   login: (mockToken: string, mockUser: User) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -36,7 +34,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  // const { token: deviceToken } = useFcmToken();
 
   useEffect(() => {
     checkAuth();
@@ -89,19 +86,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       user,
-      // token: deviceToken,
       isLoading,
       login,
       logout,
       isAuthenticated: !!user,
     }),
-    [
-      user,
-      // deviceToken,
-      isLoading,
-      login,
-      logout,
-    ]
+    [user, isLoading, login, logout]
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

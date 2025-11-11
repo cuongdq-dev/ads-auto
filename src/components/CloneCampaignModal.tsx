@@ -3,39 +3,41 @@
 import { creativeOptions, mockAccounts, mockPixels } from "@/lib/mock-data";
 import type { Campaign } from "@/lib/types";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "./ToastProvider";
 import { Input } from "./ui";
 
-interface CreateCampaignModalProps {
+interface CloneCampaignModalProps {
+  defaultValues?: Campaign;
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (campaign: Campaign) => Promise<Campaign>;
+  onClone: (campaign: Campaign) => Promise<Campaign>;
 }
 
-export function CreateCampaignModal({
+export function CloneCampaignModal({
   isOpen,
+  defaultValues,
   onClose,
-  onCreate,
-}: CreateCampaignModalProps) {
+  onClone,
+}: CloneCampaignModalProps) {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { addToast } = useToast();
 
   const [formData, setFormData] = useState<Campaign>({
-    name: "",
-    automations: ["", ""],
-    conversions: 1000,
+    id: "id" + new Date().toISOString(),
+    name: defaultValues?.name!,
+    automations: defaultValues?.automations!,
+    conversions: Number(defaultValues?.conversions || 0),
+    objective: defaultValues?.objective!,
     createdAt: new Date(),
-    objective: "conversion",
-    id: new Date().toISOString(),
-    impressions: 1000,
-    spent: 100,
-    status: "active",
+    impressions: defaultValues?.impressions!,
+    spent: defaultValues?.spent!,
+    status: "paused",
     accountId: mockAccounts[0]?.id || "",
     pixelId: mockPixels[0]?.id || "",
-    budget: 1000,
-    dailyBudget: 100,
+    budget: defaultValues?.budget!,
+    dailyBudget: defaultValues?.dailyBudget!,
     targeting: {
       ageMin: 18,
       ageMax: 65,
@@ -46,6 +48,33 @@ export function CreateCampaignModal({
       name: creativeOptions[0]?.name || "",
     },
   });
+
+  useEffect(() => {
+    setFormData({
+      id: "id" + new Date().toISOString(),
+      name: defaultValues?.name!,
+      automations: defaultValues?.automations!,
+      conversions: Number(defaultValues?.conversions || 0),
+      objective: defaultValues?.objective!,
+      createdAt: new Date(),
+      impressions: defaultValues?.impressions!,
+      spent: defaultValues?.spent!,
+      status: "paused",
+      accountId: mockAccounts[0]?.id || "",
+      pixelId: mockPixels[0]?.id || "",
+      budget: defaultValues?.budget!,
+      dailyBudget: defaultValues?.dailyBudget!,
+      targeting: {
+        ageMin: 18,
+        ageMax: 65,
+        locations: ["US"],
+      },
+      creative: {
+        id: creativeOptions[0]?.id || "",
+        name: creativeOptions[0]?.name || "",
+      },
+    });
+  }, [defaultValues]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -66,7 +95,7 @@ export function CreateCampaignModal({
   };
 
   const handleSelectChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
     if (name === "objective") {
@@ -120,12 +149,12 @@ export function CreateCampaignModal({
 
     setIsLoading(true);
     try {
-      await onCreate(formData);
-      addToast("Campaign created successfully!", "success");
+      await onClone(formData);
+      addToast("Campaign Cloned successfully!", "success");
       onClose();
       setStep(1);
     } catch (error) {
-      addToast("Failed to create campaign", "error");
+      addToast("Failed to Clone campaign", "error");
     } finally {
       setIsLoading(false);
     }
@@ -146,10 +175,13 @@ export function CreateCampaignModal({
             id="modal-title"
             className="text-lg font-semibold text-foreground"
           >
-            Create Campaign
+            Clone Campaign
           </h2>
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              setStep(1);
+            }}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Close dialog"
           >
@@ -311,7 +343,7 @@ export function CreateCampaignModal({
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Age Max
                   </label>
-                  <input
+                  <Input
                     type="number"
                     name="targeting.ageMax"
                     value={formData.targeting?.ageMax}
@@ -355,7 +387,7 @@ export function CreateCampaignModal({
               disabled={!validateStep() || isLoading}
               className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
-              {isLoading ? "Loading..." : step === 3 ? "Create" : "Next"}
+              {isLoading ? "Loading..." : step === 3 ? "Clone" : "Next"}
             </button>
           </div>
 

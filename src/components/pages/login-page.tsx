@@ -8,11 +8,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  // LanguageSwitcher,
 } from "@/components/ui";
 import { app } from "@/firebase";
-// import { HttpMethod } from "@/lib/types";
+import { HttpMethod } from "@/lib/types";
 // import { HttpMethod, invokeRequest } from "@/";
+import { invokeRequest } from "@/lib/api-core";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {
   MessageCircle,
@@ -27,10 +27,7 @@ import { useState } from "react";
 import { LanguageSwitcher } from "../ui/language-switcher";
 export function LoginPage() {
   const { t } = useI18n();
-  const {
-    login,
-    // token
-  } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
   const auth = getAuth(app);
@@ -42,36 +39,26 @@ export function LoginPage() {
       const result = await signInWithPopup(auth, provider);
 
       const user = result.user;
-      console.log(user.refreshToken);
-
       const idToken = await user.getIdToken();
-      await login(user.refreshToken, {
-        id: user.uid,
-        refreshToken: user.refreshToken,
-        name: user.displayName!,
-        email: user.email!,
-        avatar: user.photoURL!,
+
+      await invokeRequest({
+        method: HttpMethod.POST,
+        baseURL: "/auth/email/login",
+        params: { idToken },
+        onHandleError: () => setLoading(false),
+        onSuccess: async (res) => {
+          const { accessToken, refreshToken, id, email, name, photoUrl } = res;
+
+          await login(accessToken, {
+            id: id,
+            refreshToken: refreshToken,
+            name: name,
+            email: email!,
+            avatar: photoUrl,
+          });
+          router.push("/");
+        },
       });
-      router.push("/");
-
-      // await invokeRequest({
-      //   method: HttpMethod.POST,
-      //   baseURL: "/auth/email/login",
-      //   params: { idToken, deviceToken: token },
-      //   onHandleError: () => setLoading(false),
-      //   onSuccess: async (res) => {
-      //     const { accessToken, refreshToken, id, email, name, avatar } = res;
-
-      //     await login(accessToken, {
-      //       id: id,
-      //       refreshToken: refreshToken,
-      //       name: name,
-      //       email: email!,
-      //       avatar: avatar,
-      //     });
-      //     router.push("/");
-      //   },
-      // });
     } catch (err) {
       console.error("Google login failed:", err);
       alert("Đăng nhập thất bại, vui lòng thử lại!");
