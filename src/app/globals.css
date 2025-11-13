@@ -5,38 +5,57 @@
 
 :root {
   /* Dark theme with professional grays and red accent */
-  --background: #0f0f0f;
-  --foreground: #f5f5f5;
-  --card: #1a1a1a;
-  --card-foreground: #f5f5f5;
-  --popover: #1a1a1a;
-  --popover-foreground: #f5f5f5;
+  --background: #f9fafb;
+  /* nền sáng nhẹ, không chói */
+  --foreground: #111827;
+  /* chữ đậm */
+
+  --card: #ffffff;
+  --card-foreground: #111827;
+
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+
   --primary: #ef4444;
+  /* đỏ rực */
   --primary-foreground: #ffffff;
-  --secondary: #404040;
-  --secondary-foreground: #f5f5f5;
-  --muted: #404040;
-  --muted-foreground: #a3a3a3;
-  --accent: #ef4444;
+
+  --secondary: #e5e7eb;
+  /* xám sáng */
+  --secondary-foreground: #111827;
+
+  --muted: #f3f4f6;
+  /* xám nhạt hơn secondary */
+  --muted-foreground: #6b7280;
+
+  --accent: #f87171;
+  /* đỏ sáng hơn primary */
   --accent-foreground: #ffffff;
-  --destructive: #ef4444;
+
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #2a2a2a;
-  --input: #2a2a2a;
+
+  --border: #e5e7eb;
+  --input: #e5e7eb;
   --ring: #ef4444;
-  --chart-1: #ef4444;
-  --chart-2: #3b82f6;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #8b5cf6;
+
+  /* màu biểu đồ giữ lại nhưng sáng hơn */
+  --chart-1: #f87171;
+  --chart-2: #60a5fa;
+  --chart-3: #34d399;
+  --chart-4: #fbbf24;
+  --chart-5: #a78bfa;
+
   --radius: 0.5rem;
-  --sidebar: #1a1a1a;
-  --sidebar-foreground: #a3a3a3;
+
+  /* sidebar chuyển thành tông sáng nhẹ */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #374151;
   --sidebar-primary: #ef4444;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #2a2a2a;
-  --sidebar-accent-foreground: #f5f5f5;
-  --sidebar-border: #2a2a2a;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #111827;
+  --sidebar-border: #e5e7eb;
   --sidebar-ring: #ef4444;
 }
 

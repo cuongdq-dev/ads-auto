@@ -1,8 +1,12 @@
 "use client";
 
+import { invokeRequest } from "@/lib/api-core";
+import { HttpMethod } from "@/lib/types";
+import { deleteCookie } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import { Button } from "./ui";
 
 interface SidebarProps {}
 
@@ -42,6 +46,24 @@ export function Sidebar({}: SidebarProps) {
     },
     [router]
   );
+
+  const clearAuth = useCallback(() => {
+    deleteCookie("token");
+    deleteCookie("refresh-token");
+    deleteCookie("user-info");
+  }, []);
+
+  const onLogout = () => {
+    invokeRequest({
+      method: HttpMethod.POST,
+      baseURL: "/auth/logout",
+      onHandleError: () => {},
+      onSuccess: async () => {
+        clearAuth();
+        router.push("/login");
+      },
+    });
+  };
   return (
     <>
       <button
@@ -103,9 +125,21 @@ export function Sidebar({}: SidebarProps) {
               Expires in 7 days
             </p>
           </div>
-          <button className="w-full text-left text-xs text-sidebar-foreground hover:text-sidebar-primary transition-colors px-4 py-2">
-            → Need help?
-          </button>
+          <div className="flex row w-full px-4 py-2 justify-between">
+            <Button
+              onClick={onLogout}
+              variant={"link"}
+              className="text-right text-xs text-sidebar-foreground hover:text-sidebar-primary transition-colors "
+            >
+              Đăng Xuất
+            </Button>
+            <Button
+              variant={"link"}
+              className="text-left text-xs text-sidebar-foreground hover:text-sidebar-primary transition-colors "
+            >
+              → Need help?
+            </Button>
+          </div>
         </div>
       </aside>
     </>

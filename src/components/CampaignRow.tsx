@@ -1,7 +1,8 @@
 "use client";
 import type { Campaign } from "@/lib/types";
 import Link from "next/link";
-import { Button } from "./ui";
+import { Button, Checkbox } from "./ui";
+import { Switch } from "./ui/switch";
 
 interface CampaignRowProps {
   campaign: Campaign;
@@ -41,7 +42,13 @@ export function CampaignRow({
   return (
     <tr className="border-b border-border hover:bg-card/50 transition-colors">
       <td className="px-0 py-0 text-sm text-foreground capitalize text-center">
+        <Checkbox className="bg-white" />
+      </td>
+      <td className="px-0 py-0 text-sm text-foreground capitalize text-center">
         {index + 1}
+      </td>
+      <td className="px-0 py-0 text-sm text-foreground capitalize text-center">
+        <Switch className="bg-white" />
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center gap-3">
@@ -54,9 +61,29 @@ export function CampaignRow({
             <p className="text-sm text-muted-foreground">
               Time: {new Date(campaign.createdAt!).toLocaleString()}
             </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant={"link"}
+                className="p-0"
+                onClick={() => onEdit(campaign)}
+                aria-label={`Edit campaign ${campaign.name}`}
+              >
+                Edit
+              </Button>
+
+              <Button
+                variant={"link"}
+                className="p-0"
+                onClick={() => onClone(campaign)}
+                aria-label={`Clone campaign ${campaign.name}`}
+              >
+                Duplicate
+              </Button>
+            </div>
           </div>
         </div>
       </td>
+
       <td className="px-6 py-4 text-sm text-foreground capitalize">
         {campaign.objective}
       </td>
@@ -75,41 +102,6 @@ export function CampaignRow({
         >
           {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
         </span>
-      </td>
-      <td className="px-6 items-center py-4">
-        <div className="flex items-center justify-center gap-2">
-          <Button
-            onClick={() => onToggleStatus(campaign)}
-            className="px-2 py-1 text-xs w-15 font-medium rounded bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors"
-            aria-label={`${
-              campaign.status === "active" ? "Pause" : "Resume"
-            } campaign ${campaign.name}`}
-          >
-            {campaign.status === "active" ? "Pause" : "Resume"}
-          </Button>
-          <Button
-            onClick={() => onEdit(campaign)}
-            className="px-2 py-1 text-xs w-15 font-medium rounded bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors"
-            aria-label={`Edit campaign ${campaign.name}`}
-          >
-            Edit
-          </Button>
-          <Button
-            onClick={() => onDelete(campaign.id)}
-            className="px-2 py-1 text-xs w-15 font-medium rounded bg-red-100 text-red-800 hover:bg-red-200 transition-colors"
-            aria-label={`Delete campaign ${campaign.name}`}
-          >
-            Delete
-          </Button>
-
-          <Button
-            onClick={() => onClone(campaign)}
-            className="px-2 py-1 text-xs w-15 font-medium rounded bg-green-100 text-green-800 hover:bg-green-200 transition-colors"
-            aria-label={`Clone campaign ${campaign.name}`}
-          >
-            Clone
-          </Button>
-        </div>
       </td>
     </tr>
   );

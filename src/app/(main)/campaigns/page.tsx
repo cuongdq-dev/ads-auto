@@ -5,6 +5,14 @@ import { CloneCampaignModal } from "@/components/CloneCampaignModal";
 import { CreateCampaignModal } from "@/components/CreateCampaignModal";
 import { useToast } from "@/components/ToastProvider";
 import {
+  Button,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui";
+import useUpdateUrl from "@/hooks/use-url";
+import {
   cloneCampaign,
   createCampaign,
   deleteCampaign,
@@ -14,6 +22,7 @@ import {
   updateCampaignStatus,
 } from "@/lib/api";
 import type { ActivityLog, Campaign, Suggestion } from "@/lib/types";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CampaignsPage() {
@@ -25,6 +34,11 @@ export default function CampaignsPage() {
 
   const [form, setForm] = useState<Campaign | undefined>();
   const { addToast } = useToast();
+
+  const { setQueryParam } = useUpdateUrl();
+
+  const searchParams = useSearchParams();
+  const tabValue = searchParams?.get("tab") || "dashboard";
 
   useEffect(() => {
     const loadData = async () => {
@@ -84,31 +98,85 @@ export default function CampaignsPage() {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ">
-        <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-          All Campaigns
-        </h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full md:w-auto px-4 py-2 bg-primary text-primary-foreground rounded font-medium hover:bg-primary/90 transition-colors"
-        >
-          + New Campaign
-        </button>
-      </div>
-      <CampaignList
-        campaigns={campaigns}
-        onClone={(campaign) => {
-          setIsModalOpen(true);
-          setForm(campaign);
-        }}
-        onEdit={(campaign) => {
-          setIsModalOpen(true);
-          setForm(campaign);
-        }}
-        onToggleStatus={handleToggleCampaignStatus}
-        onDelete={handleDeleteCampaign}
-        isLoading={isLoading}
-      />
+      <Tabs
+        value={tabValue}
+        onValueChange={(value) => setQueryParam("tab", value)}
+        className="h-full flex flex-col"
+      >
+        <div className="border-b p-2 px-2 md:px-6 bg-card/50 backdrop-blur-sm">
+          <TabsList className="bg-transparent h-12 gap-1">
+            <TabsTrigger
+              value="dashboard"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground  transition-all"
+            >
+              Campaigns
+            </TabsTrigger>
+            <TabsTrigger
+              value="chat"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground  transition-all"
+            >
+              Ad sets
+            </TabsTrigger>
+            <TabsTrigger
+              value="expenses"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground  transition-all"
+            >
+              Ads
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        <div>
+          <div className="flex flex-col md:flex-row items-start md:items-center  gap-4 mt-2 mb-5">
+            <Button
+              variant="outline"
+              onClick={() => setIsModalOpen(true)}
+              className="w-full md:w-auto px-4 py-2 rounded font-medium hover:bg-primary/50 transition-colors"
+            >
+              + Create
+            </Button>
+
+            <Button
+              variant="outline"
+              className="w-full md:w-auto px-4 py-2 rounded font-medium hover:bg-primary/90 transition-colors"
+            >
+              Duplicate
+            </Button>
+
+            <Button
+              variant="outline"
+              className="w-full md:w-auto px-4 py-2 rounded font-medium hover:bg-primary/90 transition-colors"
+            >
+              Edit
+            </Button>
+          </div>
+
+          <TabsContent value="dashboard" className="flex-1 m-0 overflow-hidden">
+            <CampaignList
+              campaigns={campaigns}
+              onClone={(campaign) => {
+                setIsModalOpen(true);
+                setForm(campaign);
+              }}
+              onEdit={(campaign) => {
+                setIsModalOpen(true);
+                setForm(campaign);
+              }}
+              onToggleStatus={handleToggleCampaignStatus}
+              onDelete={handleDeleteCampaign}
+              isLoading={isLoading}
+            />
+          </TabsContent>
+
+          <TabsContent value="chat" className="flex-1 m-0 overflow-hidden">
+            slls
+          </TabsContent>
+
+          <TabsContent value="expenses" className="flex-1 m-0 overflow-hidden">
+            skssk
+          </TabsContent>
+        </div>
+      </Tabs>
 
       <CreateCampaignModal
         isOpen={isModalOpen && !form}
